@@ -25,15 +25,15 @@ export default function Login({ u, s }: Props) {
     const router = useRouter();
     
     const login: LoginPayload = {
-        alUsuario: " aluno@eduvale.com.br",
+        alUsuario: "aluno@eduvale.com.br",
         alSenha: "123456",
         alNome: "Paulo",
         adUsuario: "admin@eduvale.com.br",
         adSenha: "654321",
-        adNome: "Paulo"
+        adNome: "Nicolas"
     };
-    const [usuario, setUsuario] = useState(u ?? login.adUsuario);
-    const [senha, setSenha] = useState(s ?? login.adSenha);
+    const [usuario, setUsuario] = useState(u ?? login.alUsuario);
+    const [senha, setSenha] = useState(s ?? login.alSenha);
 
     type Destino = "admin" | "aluno" | "erro";
 
@@ -73,15 +73,17 @@ export default function Login({ u, s }: Props) {
             headerBackgroundColor={{ light: "#be0000", dark: "#750000" }}
             headerImage={
                 <Image
-                    source={require("@/assets/images/logoSPFCsfundo.png")}
+                    source={require("@/assets/spfc/logoSPFCsfundo.png")}
                     style={styles.logo}
                     contentFit="contain"
                 />
             }
             tituloApp={"Soberano'S"}
             sizeTitulo={34}
-            children={
-                <ThemedView style={styles.container}>
+            visivel={false}
+        >
+            <ThemedView style={styles.container}>
+                <ThemedView style={styles.containerPrincipal}>
                     <ThemedView style={styles.containerForm}>
                         <TextInput
                             placeholder="Email"
@@ -106,9 +108,7 @@ export default function Login({ u, s }: Props) {
                         </TouchableOpacity>
                     </ThemedView>
                 </ThemedView>
-            }
-        >
-            
+            </ThemedView>
         </ParallaxScrollView>
     );
 }
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
         borderWidth: 5
     },
     container: {
-        flex: 1,
+        minHeight: 350,
         width: '100%',
         flexDirection: 'column',
         alignItems: 'center',
@@ -144,8 +144,15 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: "rgba(0,0,0,0.05)",
     },
+    containerPrincipal: {
+        flex: 3,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'transparent'
+    },
     containerForm: {
-        flex: 1,
+        flex: 2,
         width: '100%',
         gap: 12,
         alignItems: "center",

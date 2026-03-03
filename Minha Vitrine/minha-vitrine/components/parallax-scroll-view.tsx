@@ -1,5 +1,5 @@
-import type { PropsWithChildren, ReactElement } from "react";
-import { StyleSheet } from "react-native";
+import { useState, type PropsWithChildren, type ReactElement } from "react";
+import { StyleSheet, TouchableOpacity, Text } from "react-native";
 import Animated, {
   interpolate,
   useAnimatedRef,
@@ -19,6 +19,8 @@ type Props = PropsWithChildren<{
   headerBackgroundColor: { dark: string; light: string };
   tituloApp: string;
   sizeTitulo: number;
+  onPress?: () => void;
+  visivel: boolean
 }>;
 
 export default function ParallaxScrollView({
@@ -26,7 +28,9 @@ export default function ParallaxScrollView({
   headerImage,
   headerBackgroundColor,
   tituloApp,
-  sizeTitulo
+  sizeTitulo,
+  onPress,
+  visivel
 }: Props) {
   const backgroundColor = useThemeColor({}, "background");
   const colorScheme = useColorScheme() ?? "light";
@@ -71,6 +75,13 @@ export default function ParallaxScrollView({
         <ThemedView style={styles.containerTitulo}>
           <ThemedText style={[styles.tituloApp, {fontSize: sizeTitulo}]}>{tituloApp}</ThemedText>
         </ThemedView>
+        {visivel && (
+          <ThemedView style={styles.menuSuperior}>
+            <TouchableOpacity style={styles.botaoSair} onPress={onPress}>
+              <ThemedText style={styles.textoSair}>Sair</ThemedText>
+            </TouchableOpacity>
+          </ThemedView>
+        )}
       </Animated.View>
 
       <ThemedView style={styles.content}>{children}</ThemedView>
@@ -118,4 +129,32 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     backgroundColor: "#fff",
   },
+
+  menuSuperior: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    width: "25%",
+    alignItems: "flex-end",
+    backgroundColor: "#550404",
+    padding: 5,
+    paddingBottom: 0,
+    borderTopLeftRadius: 24,
+    overflow: "hidden",
+  },
+  botaoSair: {
+    backgroundColor: "#750000",
+    width: '100%',
+    elevation: 3,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderTopLeftRadius: 24,
+    padding: 2,
+  },
+  textoSair: {
+    color: "#fff",
+    fontWeight: "700",
+    fontSize: 14,
+  },
+
 });

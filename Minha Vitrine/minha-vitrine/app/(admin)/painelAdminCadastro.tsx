@@ -3,11 +3,12 @@ import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { Image } from "expo-image";
 import { StyleSheet, TextInput, TouchableOpacity, Alert } from "react-native";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 
 export default function PainelAdminCadastro() {
     const { nome } = useLocalSearchParams<{ nome?: string }>();
+    const router = useRouter();
 
     const [nomeProduto, setNomeProduto] = useState("");
     const [descricao, setDescricao] = useState("");
@@ -23,19 +24,33 @@ export default function PainelAdminCadastro() {
         Alert.alert("OK", "Produto cadastrado (exemplo).");
     };
 
-    return (
-        <ParallaxScrollView
-            headerBackgroundColor={{ light: "#be0000", dark: "#750000" }}
-            headerImage={
+    const confirmarSaida = () => {
+        Alert.alert("Sair", "Deseja realmente sair?", [
+            { text: "Cancelar", style: "cancel" },
+            {
+                text: "Sair",
+                style: "destructive",
+                onPress: () => router.replace("/login"),
+            },
+        ]);
+    };
+
+        return (
+            <ParallaxScrollView
+                headerBackgroundColor={{ light: "#be0000", dark: "#750000" }}
+                headerImage={
                 <Image
-                    source={require("@/assets/images/logoSPFC.png")}
+                    source={require("@/assets/spfc/logoSPFC.png")}
                     style={styles.logo}
                     contentFit="contain"
                 />
-            }
-            tituloApp={`Bem-vindo, ${nome ?? "usuário"}`}
-            sizeTitulo={24}
-        >
+                }
+                tituloApp={`Bem-vindo, ${nome ?? "usuário"}`}
+                sizeTitulo={24}
+                visivel={true}
+                onPress={confirmarSaida}
+            >
+
             <ThemedView style={styles.container}>
                 <ThemedView style={styles.menuBar}>
                     <TouchableOpacity style={styles.menuItem}>

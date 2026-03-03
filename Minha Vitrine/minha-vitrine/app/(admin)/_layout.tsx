@@ -5,8 +5,8 @@ import { Colors } from "@/constants/theme";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 
 export default function AdminTabs() {
-  const colorScheme = useColorScheme();
-  const { nome } = useLocalSearchParams<{ nome?: string }>();
+    const colorScheme = useColorScheme();
+    const { nome } = useLocalSearchParams<{ nome?: string }>();
 
     return (
         <Tabs
